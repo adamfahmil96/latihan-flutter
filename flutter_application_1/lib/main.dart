@@ -11,7 +11,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: Text('List View with Builder')),
-        body: ListView.builder(
+        body: ListView.separated(
+          separatorBuilder: (context, index) {
+            return Divider(color: Colors.black);
+          },
           itemCount: myColor.length,
           itemBuilder: (context, index) {
             return Container(
