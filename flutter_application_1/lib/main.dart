@@ -5,68 +5,97 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  var faker = new Faker();
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  // Example for Stateful, the variable of 'counter' will change on the UI
+  int counter = 1;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('Extract Widget')),
-        // body: ListView( // Using Manual ListView
-        //   children: [
-        //     ChatItem(
-        //       imageUrl: 'https://picsum.photos/id/1005/200/300',
-        //       title: faker.person.name(),
-        //       subtitle: faker.lorem.sentence(),
-        //     ),
-        //     ChatItem(
-        //       imageUrl: 'https://picsum.photos/id/1003/200/300',
-        //       title: faker.person.name(),
-        //       subtitle: faker.lorem.sentence(),
-        //     ),
-        //     ChatItem(
-        //       imageUrl: 'https://picsum.photos/id/1015/200/300',
-        //       title: faker.person.name(),
-        //       subtitle: faker.lorem.sentence(),
-        //     ),
-        //     ChatItem(
-        //       imageUrl: 'https://picsum.photos/id/1025/200/300',
-        //       title: faker.person.name(),
-        //       subtitle: faker.lorem.sentence(),
-        //     ),
-        //   ],
-        // ),
-        body: ListView.builder(
-            // Geneate 30 random chats using ListView Builder
-            itemCount: 30,
-            itemBuilder: (context, index) {
-              return ChatItem(
-                  imageUrl: 'https://picsum.photos/id/$index/200/300',
-                  title: faker.person.name(),
-                  subtitle: faker.lorem.sentence());
-            }),
+        appBar: AppBar(title: Text('Dynamic Apps')),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(counter.toString(),
+                style: TextStyle(
+                    fontSize: 50 +
+                        double.parse(counter
+                            .toString()))), // the font size will change every updated on counter
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    if (counter != 0) {
+                      setState(() {
+                        // re-render the UI, will build new context
+                        counter--;
+                      });
+                    }
+                    print(counter);
+                  },
+                  child: Icon(Icons.remove),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      counter++;
+                    });
+                    print(counter);
+                  },
+                  child: Icon(Icons.add),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
-class ChatItem extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final String subtitle;
-
-  const ChatItem(
-      {required this.imageUrl, required this.title, required this.subtitle});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(imageUrl),
-      ),
-      title: Text(title),
-      subtitle: Text(subtitle),
-      trailing: Text('10:00 PM'),
-    );
-  }
-}
+// class MyApp extends StatelessWidget {
+//   // Example for Stateless, the variable of 'counter' did not change on the UI
+//   int counter = 1;
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(title: Text('Dynamic Apps')),
+//         body: Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//           children: [
+//             Text(counter.toString(), style: TextStyle(fontSize: 20)),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//               children: [
+//                 ElevatedButton(
+//                   onPressed: () {
+//                     if (counter != 0) {
+//                       counter--;
+//                     }
+//                     print(counter);
+//                   },
+//                   child: Icon(Icons.remove),
+//                 ),
+//                 ElevatedButton(
+//                   onPressed: () {
+//                     counter++;
+//                     print(counter);
+//                   },
+//                   child: Icon(Icons.add),
+//                 ),
+//               ],
+//             )
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
