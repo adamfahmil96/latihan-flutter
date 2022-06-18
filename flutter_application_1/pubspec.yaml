@@ -38,6 +38,9 @@ dependencies:
   # Generate data fake/dummy
   faker: ^2.0.0
 
+  # Provides date/number format
+  intl: ^0.17.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
